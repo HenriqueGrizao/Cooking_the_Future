@@ -20,4 +20,8 @@ public class bater : MonoBehaviour
         }
        
     }
+    private void OnMouseDown()
+    {
+        
+    }
 }

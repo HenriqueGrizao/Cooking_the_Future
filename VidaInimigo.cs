@@ -22,7 +22,6 @@ public class VidaInimigo : MonoBehaviour
    //     Debug.Log("levou");
         if (Vida <= 0) 
         {
-            Debug.Log("Moreeu");
             Destroy(this.gameObject);
         }
     }

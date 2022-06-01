@@ -19,7 +19,10 @@ public class jogador_melancia : MonoBehaviour
     private float cronometroDestroiAtaque;
     private int direcaoDaVisao;
     private SpriteRenderer spriteRenderer;
- //   public GameObject gameController;
+    private bool ComesaAtaque;
+    private int direcaoClik;
+
+    //   public GameObject gameController;
 
     private void Start()
     {
@@ -79,6 +82,11 @@ public class jogador_melancia : MonoBehaviour
         GetComponent<Rigidbody2D>().MovePosition(direcao);
 
     }
+    public  void comesaSocar(int direcao) 
+    {
+        ComesaAtaque = true;
+        direcaoClik = direcao;
+    }
 
     public void socar() 
     {
@@ -87,19 +95,24 @@ public class jogador_melancia : MonoBehaviour
         {
             cronometroDestroiAtaque += Time.deltaTime;
         } 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && Cooldown <= cronometroAposAtaque)
+        if (ComesaAtaque && Cooldown <= cronometroAposAtaque)
         {
             spriteRenderer.enabled = false;
-            transform.GetChild(direcaoDaVisao).gameObject.SetActive(true);
+            transform.GetChild(direcaoClik).gameObject.SetActive(true);
             estaAtacando = true;
             cronometroAposAtaque = 0;
         }
         if (cronometroDestroiAtaque >= DestroiAtaqueApos) 
         {
-            transform.GetChild(direcaoDaVisao).gameObject.SetActive(false);
+            transform.GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(1).gameObject.SetActive(false);
+            transform.GetChild(2).gameObject.SetActive(false);
+            transform.GetChild(3).gameObject.SetActive(false);
             spriteRenderer.enabled = true;
             estaAtacando = false;
             cronometroDestroiAtaque = 0;
+            ComesaAtaque = false;
         }
-    }
+    } 
+   
 } 
