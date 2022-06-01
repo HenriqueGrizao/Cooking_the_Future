@@ -19,7 +19,6 @@ public class VidaInimigo : MonoBehaviour
    public void levardanoInimigo(int dano) 
     {
         Vida = Vida - dano;
-   //     Debug.Log("levou");
         if (Vida <= 0) 
         {
             Destroy(this.gameObject);
