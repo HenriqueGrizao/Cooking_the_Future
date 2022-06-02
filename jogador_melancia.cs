@@ -17,7 +17,6 @@ public class jogador_melancia : MonoBehaviour
     private short eixoX = 0;
     private short eixoY = 0;
     private float cronometroDestroiAtaque;
-    private int direcaoDaVisao;
     private SpriteRenderer spriteRenderer;
     private bool ComesaAtaque;
     private int direcaoClik;
@@ -43,14 +42,12 @@ public class jogador_melancia : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W)) { 
             eixoY = 1;
-            direcaoDaVisao = 2;
             animacao.SetFloat("direcao_y", 1); animacao.SetFloat("direcao_x", 0);
             capsula.enabled = true;
             quadrado.enabled = false;
         } else
         if (Input.GetKey(KeyCode.S)) { 
             eixoY = -1; 
-            direcaoDaVisao = 3;
             animacao.SetFloat("direcao_y", -1); animacao.SetFloat("direcao_x", 0);
             capsula.enabled = true;
             quadrado.enabled = false;
@@ -58,7 +55,6 @@ public class jogador_melancia : MonoBehaviour
         else { eixoY = 0; }
         if (Input.GetKey(KeyCode.D)) { 
             eixoX = 1; 
-            direcaoDaVisao = 1;
             animacao.SetFloat("direcao_y", 0); animacao.SetFloat("direcao_x", 1);
             capsula.enabled = false;
             quadrado.enabled = true;
@@ -66,7 +62,6 @@ public class jogador_melancia : MonoBehaviour
         else
         if (Input.GetKey(KeyCode.A)) { 
             eixoX = -1; 
-            direcaoDaVisao = 0;
             animacao.SetFloat("direcao_y", 0); animacao.SetFloat("direcao_x", -1);
             capsula.enabled = false;
             quadrado.enabled = true;
