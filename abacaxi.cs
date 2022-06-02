@@ -40,18 +40,12 @@ public class abacaxi : MonoBehaviour
         {
 
             vidaJogador.SofrerDano(1);
-            //Batida = distanciaAteJogador;
             cronometroDano = 0;
-            bater();
-        }
-    }
-    void bater() 
-    {
             if (cronometroDano >= CooldownDoDano)
             {
-            
                 vidaJogador.SofrerDano(1);
                 cronometroDano = 0;
             }
+        }
     }
 }

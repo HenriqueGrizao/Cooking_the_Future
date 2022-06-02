@@ -20,22 +20,19 @@ public class laranja : MonoBehaviour
         vidaJogador = jogador.GetComponent<VidaJogador>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        transform.Rotate(0,0,5);
-    }
+    
     void FixedUpdate()
     {
+
         Vector2 direcao = jogador.transform.position - transform.position;
+        if(direcao.x <= 0) { transform.Rotate(0, 0, 5); } else { transform.Rotate(0, 0, -5); }
+
         distanciaAteJogador = direcao.x * direcao.x + direcao.y * direcao.y;
 
         if (distanciaAteJogador <= AtacarQuando)
         {
             GetComponent<Rigidbody2D>().MovePosition(GetComponent<Rigidbody2D>().position + direcao.normalized * Velocidade * Time.deltaTime);
         }
-        else { ; }
-
         cronometroDano += Time.deltaTime;
     }
     void OnCollisionStay2D(Collision2D objetoDeColisao)
@@ -44,18 +41,12 @@ public class laranja : MonoBehaviour
         {
 
             vidaJogador.SofrerDano(1);
-            //Batida = distanciaAteJogador;
             cronometroDano = 0;
-            bater();
-        }
-    }
-    void bater()
-    {
-        if (cronometroDano >= CooldownDoDano)
-        {
-
-            vidaJogador.SofrerDano(1);
-            cronometroDano = 0;
+            if (cronometroDano >= CooldownDoDano)
+            {
+                vidaJogador.SofrerDano(1);
+                cronometroDano = 0;
+            }
         }
     }
 }
