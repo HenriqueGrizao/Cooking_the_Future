@@ -9,6 +9,9 @@ public class jogador_melancia : MonoBehaviour
     public float Cooldown;
     public Canvas Canvas;
     public int Dano;
+    public Color CorDano;
+
+    private Color CorPadrao;
     private bool estaAtacando;
     private float cronometroAposAtaque;
     private Animator animacao;
@@ -21,8 +24,6 @@ public class jogador_melancia : MonoBehaviour
     private bool ComesaAtaque;
     private int direcaoClik;
 
-    //   public GameObject gameController;
-
     private void Start()
     {
         animacao = GetComponent<Animator>();
@@ -30,7 +31,7 @@ public class jogador_melancia : MonoBehaviour
         quadrado = GetComponent<PolygonCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         Canvas = GameObject.FindWithTag("Canvas").GetComponent<Canvas>();
-    //    gameController = GameObject.FindWithTag("GameController");
+        CorPadrao = spriteRenderer.color;
     }
     void Update()
     {
@@ -108,6 +109,14 @@ public class jogador_melancia : MonoBehaviour
             cronometroDestroiAtaque = 0;
             ComesaAtaque = false;
         }
-    } 
+    }
+    void voltaCor() { spriteRenderer.color = CorPadrao; } 
+    public void TrocaCor()
+    {
+        spriteRenderer.color = CorDano;
+        Invoke("voltaCor", 0.1f);
+
+
+    }
    
 } 

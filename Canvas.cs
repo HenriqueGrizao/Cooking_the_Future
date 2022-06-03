@@ -9,7 +9,7 @@ public class Canvas : MonoBehaviour
     public Slider slider;
     public string NomeFase;
     private VidaJogador Jogador_vida;
-    // Start is called before the first frame update
+
     void Start()
     {
         Jogador_vida = GameObject.FindWithTag("Player").GetComponent<VidaJogador>();
