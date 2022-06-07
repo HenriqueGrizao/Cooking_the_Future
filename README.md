@@ -1,6 +1,6 @@
 # Cooking_the_Future
 <h1 align="center"> Código </h1>
-  Este é o código de um jogo que usa a Unity versão 2019.1.0f2 como engine, feito em C# por meio do visula Studio 2019. Este sendo o meu primeiro jogo
+  Este é o código de um jogo que usa a Unity versão 2019.1.0f2 como engine, feito em C# por meio do visual Studio 2019. Este sendo o meu primeiro jogo
  que estou fazendo sem seguir nem um tutorial, por isso não é feito de uma forma totalmente otimizada ou utilizando todas as ferramentas 
  que se tem disponível na engine <br>
   O principal objetivo desse projeto é aprender como mexer na unity e melhorar minha programação antes de partir para os projetos que realmente quero fazer,
