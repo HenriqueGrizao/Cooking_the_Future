@@ -8,8 +8,10 @@ public class Maca : MonoBehaviour
     public float AtacarQuando;
     public float CooldownDoDano;
     public float AtirarQuando;
+    public GameObject tiro;
 
-    public float distanciaAteJogador;
+
+    private float distanciaAteJogador;
     private GameObject jogador;
     private float cronometroDano;
     private VidaJogador vidaJogador;
@@ -26,26 +28,16 @@ public class Maca : MonoBehaviour
 
         if (distanciaAteJogador <= AtirarQuando)
         {
-            Debug.Log("atirar");
+            cronometroDano += Time.deltaTime;
+            if (cronometroDano >= CooldownDoDano)
+            { 
+                Instantiate(tiro, transform.GetChild(1).transform);
+                cronometroDano = 0;
+            }
+
         } else if (distanciaAteJogador <= AtacarQuando)
         {
             GetComponent<Rigidbody2D>().MovePosition(GetComponent<Rigidbody2D>().position + direcao.normalized * Velocidade * Time.deltaTime);
         }
-
-        cronometroDano += Time.deltaTime;
     }
-   /* void OnCollisionStay2D(Collision2D objetoDeColisao)
-    {
-        if (objetoDeColisao.gameObject == jogador && cronometroDano >= CooldownDoDano)
-        {
-
-            vidaJogador.SofrerDano(1);
-            cronometroDano = 0;
-            if (cronometroDano >= CooldownDoDano)
-            {
-                vidaJogador.SofrerDano(1);
-                cronometroDano = 0;
-            }
-        }
-    }*/
 }

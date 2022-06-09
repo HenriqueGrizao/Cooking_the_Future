@@ -27,4 +27,6 @@ public class VidaInimigo : MonoBehaviour
         tamanhoDaBarra.x = PorcentagenVida;
         BarraDeVida.transform.GetChild(1).transform.localScale = tamanhoDaBarra;
     }
+
+   
 }

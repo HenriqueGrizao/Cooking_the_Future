@@ -46,6 +46,7 @@ public class inimigoMelee : MonoBehaviour
                 vidaJogador.SofrerDano(1);
                 cronometroDano = 0;
             }
+            
         }
     }
 }
