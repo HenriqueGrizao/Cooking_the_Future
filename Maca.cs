@@ -20,6 +20,7 @@ public class Maca : MonoBehaviour
         jogador = GameObject.FindWithTag("Player");
         cronometroDano = CooldownDoDano;
         vidaJogador = jogador.GetComponent<VidaJogador>();
+        
     }
     void FixedUpdate()
     {

@@ -7,6 +7,7 @@ public class laranja : MonoBehaviour
     public int Velocidade;
     public float AtacarQuando;
     public float CooldownDoDano;
+    public GameObject Sprite;
 
     private float distanciaAteJogador;
     private GameObject jogador;
@@ -25,7 +26,7 @@ public class laranja : MonoBehaviour
     {
 
         Vector2 direcao = jogador.transform.position - transform.position;
-        if(direcao.x <= 0) { transform.Rotate(0, 0, 5); } else { transform.Rotate(0, 0, -5); }
+        if(direcao.x <= 0) { Sprite.transform.Rotate(0, 0, 5); } else { Sprite.transform.Rotate(0, 0, -5); }
 
         distanciaAteJogador = direcao.x * direcao.x + direcao.y * direcao.y;
 

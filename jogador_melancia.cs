@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class jogador_melancia : MonoBehaviour
 {
     public float Velocidade;
@@ -23,7 +22,6 @@ public class jogador_melancia : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool ComesaAtaque;
     private int direcaoClik;
-
     private void Start()
     {
         animacao = GetComponent<Animator>();
@@ -40,7 +38,6 @@ public class jogador_melancia : MonoBehaviour
     }
     void movimenta() 
     {
-
         if (Input.GetKey(KeyCode.W)) { 
             eixoY = 1;
             animacao.SetFloat("direcao_y", 1); animacao.SetFloat("direcao_x", 0);
@@ -76,14 +73,12 @@ public class jogador_melancia : MonoBehaviour
 
         Vector2 direcao = new Vector2(eixoX * Velocidade * Time.deltaTime + posicaoAtualX, eixoY * Velocidade * Time.deltaTime + posicaoAtualY);
         GetComponent<Rigidbody2D>().MovePosition(direcao);
-
     }
     public  void comesaSocar(int direcao) 
     {
         ComesaAtaque = true;
         direcaoClik = direcao;
     }
-
     public void socar() 
     {
         cronometroAposAtaque += Time.deltaTime;
@@ -115,8 +110,5 @@ public class jogador_melancia : MonoBehaviour
     {
         spriteRenderer.color = CorDano;
         Invoke("voltaCor", 0.1f);
-
-
     }
-   
 } 
