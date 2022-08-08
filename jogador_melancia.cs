@@ -16,8 +16,8 @@ public class jogador_melancia : MonoBehaviour
     private Animator animacao;
     private Collider2D capsula;
     private Collider2D quadrado;
-    private short eixoX = 0;
-    private short eixoY = 0;
+    private float eixoX = 0;
+    private float eixoY = 0;
     private float cronometroDestroiAtaque;
     private SpriteRenderer spriteRenderer;
     private bool ComesaAtaque;
@@ -38,6 +38,7 @@ public class jogador_melancia : MonoBehaviour
     }
     void movimenta() 
     {
+
         if (Input.GetKey(KeyCode.W)) { 
             eixoY = 1;
             animacao.SetFloat("direcao_y", 1); animacao.SetFloat("direcao_x", 0);
@@ -67,6 +68,9 @@ public class jogador_melancia : MonoBehaviour
         else
         { eixoX = 0;}
         animacao.SetBool("Andando", (eixoX != 0 || eixoY != 0));
+
+        if (eixoX != 0 && eixoY != 0) { eixoX *= 0.8f; eixoY *= 0.8f; }
+
 
         float posicaoAtualX = transform.position.x;
         float posicaoAtualY = transform.position.y;
@@ -109,6 +113,6 @@ public class jogador_melancia : MonoBehaviour
     public void TrocaCor()
     {
         spriteRenderer.color = CorDano;
-        Invoke("voltaCor", 0.1f);
+        Invoke("voltaCor", 0.15f);
     }
 } 
