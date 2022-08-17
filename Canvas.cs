@@ -8,19 +8,20 @@ public class Canvas : MonoBehaviour
 {
     public Slider slider;
     public string NomeFase;
-    private VidaJogador Jogador_vida;
+    private StatusJogador Jogador_vida;
 
     void Start()
     {
-        Jogador_vida = GameObject.FindWithTag("Player").GetComponent<VidaJogador>();
+        Jogador_vida = GameObject.FindWithTag("Player").GetComponent<StatusJogador>();
         slider.maxValue = Jogador_vida.vidaMaxima;
         slider.value = slider.maxValue;
     }
-
+    // muda o valor do slider
     public void AutalizaBarraDeVida()
     {
         slider.value = Jogador_vida.vida;
     }
+    //reseta a fase
     public void Reset()
     {
         Time.timeScale = 1;

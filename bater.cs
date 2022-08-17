@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class bater : MonoBehaviour
-{
-    public int dano;       
+public class Bater : MonoBehaviour
+{//Fica no ataque para detectar com que ele colidiu e dar o dano
+    public int dano;
 
     private void Start()
-    {
-        dano = GameObject.FindWithTag("Player").GetComponent<jogador_melancia>().Dano;
+    {//o valor do dano esta sendo pego da variavel do jogador
+        dano = GameObject.FindWithTag("Player").GetComponent<StatusJogador>().Dano;
     }
     void OnTriggerEnter2D(Collider2D objetoDeColisao)
     {
         if (objetoDeColisao.CompareTag("Enemy")) 
         {
-            objetoDeColisao.GetComponent<VidaInimigo>().levardanoInimigo(dano);
+            objetoDeColisao.GetComponent<StatusInimigo>().levardanoInimigo(dano);
         }
        
     }

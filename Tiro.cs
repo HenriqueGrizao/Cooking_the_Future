@@ -5,6 +5,9 @@ using UnityEngine;
 public class Tiro : MonoBehaviour
 {
     public int Velocidade;
+    public int dano;
+    public GameObject particula;
+    public SpriteRenderer spriteRenderer;
 
     private GameObject jogador;
     private Vector2 direcao;
@@ -14,41 +17,49 @@ public class Tiro : MonoBehaviour
     private short quadrante;
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         jogador = GameObject.FindWithTag("Player");
         direcao = jogador.transform.position - transform.position;
-        Destroy(this.gameObject, 3f);
+       //Equação para achar o angulo certo.
         x = jogador.transform.position.x - transform.position.x;
         y = jogador.transform.position.y - transform.position.y;
         quadrante = achaQuadrante(x, y);
         p = Mathf.Sqrt(x*x + y*y);
         transform.rotation = Quaternion.Euler(0, 0, achaSeno(y / p, quadrante) -90 ) ;
-
+        //destroi o tiro depois de um tempo criado.
+        Destroy(this.gameObject, 3f);
     }
 
     void Update()
-    {
+    {//move na direção que jogador estava no momento que se criou o tiro
         GetComponent<Rigidbody2D>().MovePosition(GetComponent<Rigidbody2D>().position + direcao.normalized * Velocidade * Time.deltaTime);
     }
-
+    //Da o dano quando encosta no com o jogador
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<VidaJogador>().SofrerDano(1);
-            Destroy(this.gameObject);
+            collision.gameObject.GetComponent<StatusJogador>().SofrerDano(dano);
+            spriteRenderer.enabled = false;
+            Velocidade = 20;
+            Instantiate(particula, this.transform);
+            Destroy(this.gameObject, 0.3f);    
+      
         }
         else if (!(collision.CompareTag("EditorOnly")) && !(collision.CompareTag("Enemy")))
         {
-            Destroy(this.gameObject);
-
+            spriteRenderer.enabled = false;
+            Velocidade = 20;
+            Instantiate(particula, this.transform);
+            Destroy(this.gameObject, 0.3f);
         }
     }
     private int achaSeno(float numb, int quadrante) 
     {
         int angulo;
-        float numero = numb;
-          if(numb < 0) { numb = numb * -1; }
-
+        //deicha o numb positivo
+        if(numb < 0) { numb = numb * -1; }
+        //acha o angulo
         if (numb < 0.0872) { angulo = 5; }
         else if(numb < 0.1736) { angulo = 1; }
         else if (numb < 0.2588) { angulo = 15; }
@@ -67,7 +78,7 @@ public class Tiro : MonoBehaviour
         else if (numb < 0.9848) { angulo = 80; }
         else if (numb < 0.9962) { angulo = 85; }
         else { angulo = 90; }
-
+        //regula o angulo comforme o quadrante
         if (quadrante == 2 ){ angulo = 180 - angulo;} 
         else if (quadrante == 3){ angulo += 180;}  
         else if(quadrante == 4) { angulo = 360 - angulo;}  

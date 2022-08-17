@@ -1,118 +1,97 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class jogador_melancia : MonoBehaviour
+public class JogadorMelancia : MonoBehaviour
 {
     public float Velocidade;
     public float DestroiAtaqueApos;
     public float Cooldown;
     public Canvas Canvas;
-    public int Dano;
-    public Color CorDano;
+    public float DuracaoAtaque;
 
-    private Color CorPadrao;
-    private bool estaAtacando;
     private float cronometroAposAtaque;
     private Animator animacao;
-    private Collider2D capsula;
-    private Collider2D quadrado;
+    private Collider2D colliderCapsula;
+    private Collider2D colliderQuadrado;
     private float eixoX = 0;
     private float eixoY = 0;
-    private float cronometroDestroiAtaque;
     private SpriteRenderer spriteRenderer;
-    private bool ComesaAtaque;
     private int direcaoClik;
     private void Start()
     {
         animacao = GetComponent<Animator>();
-        capsula = GetComponent<CapsuleCollider2D>();
-        quadrado = GetComponent<PolygonCollider2D>();
+        colliderCapsula = GetComponent<CapsuleCollider2D>();
+        colliderQuadrado = GetComponent<PolygonCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         Canvas = GameObject.FindWithTag("Canvas").GetComponent<Canvas>();
-        CorPadrao = spriteRenderer.color;
     }
     void Update()
     {
         movimenta();
-        socar();
+        cronometroAposAtaque += Time.deltaTime;
     }
-    void movimenta() 
+    private void movimenta() 
     {
-
+        //detecta qual tecla foi presionada e muda o x, y, animação e a colisão
         if (Input.GetKey(KeyCode.W)) { 
             eixoY = 1;
             animacao.SetFloat("direcao_y", 1); animacao.SetFloat("direcao_x", 0);
-            capsula.enabled = true;
-            quadrado.enabled = false;
+            colliderCapsula.enabled = true;
+            colliderQuadrado.enabled = false;
         } else
         if (Input.GetKey(KeyCode.S)) { 
             eixoY = -1; 
             animacao.SetFloat("direcao_y", -1); animacao.SetFloat("direcao_x", 0);
-            capsula.enabled = true;
-            quadrado.enabled = false;
+            colliderCapsula.enabled = true;
+            colliderQuadrado.enabled = false;
         }
         else { eixoY = 0; }
         if (Input.GetKey(KeyCode.D)) { 
             eixoX = 1; 
             animacao.SetFloat("direcao_y", 0); animacao.SetFloat("direcao_x", 1);
-            capsula.enabled = false;
-            quadrado.enabled = true;
+            colliderCapsula.enabled = false;
+            colliderQuadrado.enabled = true;
         }
         else
         if (Input.GetKey(KeyCode.A)) { 
             eixoX = -1; 
             animacao.SetFloat("direcao_y", 0); animacao.SetFloat("direcao_x", -1);
-            capsula.enabled = false;
-            quadrado.enabled = true;
+            colliderCapsula.enabled = false;
+            colliderQuadrado.enabled = true;
         }
         else
         { eixoX = 0;}
-        animacao.SetBool("Andando", (eixoX != 0 || eixoY != 0));
 
+        animacao.SetBool("Andando", (eixoX != 0 || eixoY != 0));
+        //corige o bug de adar o dobro de veloidade na diagoal;
         if (eixoX != 0 && eixoY != 0) { eixoX *= 0.8f; eixoY *= 0.8f; }
 
-
+        
         float posicaoAtualX = transform.position.x;
         float posicaoAtualY = transform.position.y;
-
         Vector2 direcao = new Vector2(eixoX * Velocidade * Time.deltaTime + posicaoAtualX, eixoY * Velocidade * Time.deltaTime + posicaoAtualY);
         GetComponent<Rigidbody2D>().MovePosition(direcao);
     }
+    //É chamado pelo detectaClick, informa a direção do ataque e chama o Atacar.  
     public  void comesaSocar(int direcao) 
     {
-        ComesaAtaque = true;
         direcaoClik = direcao;
+        Atacar();
     }
-    public void socar() 
+    //É quem faz com que o jogador volte para o modo ondee não esta atacando;
+    public void desativaAtaque() {
+        transform.GetChild(direcaoClik).gameObject.SetActive(false);
+        spriteRenderer.enabled = true;
+    }
+    //Verifica o cronometro para evitar espamar ataque. Coloca o jogador no modo de ataque e chama o desativaAtaque apos um tempo
+    public void Atacar() 
     {
-        cronometroAposAtaque += Time.deltaTime;
-        if (estaAtacando == true)
-        {
-            cronometroDestroiAtaque += Time.deltaTime;
-        } 
-        if (ComesaAtaque && Cooldown <= cronometroAposAtaque)
+        if (Cooldown <= cronometroAposAtaque) 
         {
             spriteRenderer.enabled = false;
             transform.GetChild(direcaoClik).gameObject.SetActive(true);
-            estaAtacando = true;
+            Invoke("desativaAtaque", DuracaoAtaque);
             cronometroAposAtaque = 0;
         }
-        if (cronometroDestroiAtaque >= DestroiAtaqueApos) 
-        {
-            transform.GetChild(0).gameObject.SetActive(false);
-            transform.GetChild(1).gameObject.SetActive(false);
-            transform.GetChild(2).gameObject.SetActive(false);
-            transform.GetChild(3).gameObject.SetActive(false);
-            spriteRenderer.enabled = true;
-            estaAtacando = false;
-            cronometroDestroiAtaque = 0;
-            ComesaAtaque = false;
-        }
-    }
-    void voltaCor() { spriteRenderer.color = CorPadrao; } 
-    public void TrocaCor()
-    {
-        spriteRenderer.color = CorDano;
-        Invoke("voltaCor", 0.15f);
     }
 } 

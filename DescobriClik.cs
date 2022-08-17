@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class DescobriClik : MonoBehaviour
 {
-    // Start is called before the first frame update
     public int direcao;
-    public jogador_melancia jogador;
+    public JogadorMelancia jogador;
     private void Start()
     {
-        jogador = GameObject.FindWithTag("Player").GetComponent<jogador_melancia>();
+        jogador = GameObject.FindWithTag("Player").GetComponent<JogadorMelancia>();
     }
     private void Update()
-    {
+    {// acompanha o movimento do jogador
         transform.position = jogador.transform.position;
     }
     private void OnMouseDown()
-    {
+    {//informa a direção
         jogador.comesaSocar(direcao);
     }
 }

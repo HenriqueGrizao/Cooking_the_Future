@@ -2,51 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class inimigoMelee : MonoBehaviour
+public class InimigoMelee : MonoBehaviour
 {
     public float Velocidade;
-    public float AtacarQuando;
-    public float CooldownDoDano;
+    public float DistanciaDePercepcao;
 
     private float distanciaAteJogador;
     private GameObject jogador;
-    public float cronometroDano;
     public Animator animator;
-    private VidaJogador vidaJogador;
+    private StatusJogador statusJogador;
+    private StatusInimigo statusInimigo;
     void Start()
     {
         jogador = GameObject.FindWithTag("Player");
-        cronometroDano = CooldownDoDano;
         animator = GetComponent<Animator>();
-        vidaJogador = jogador.GetComponent<VidaJogador>();
+        statusJogador = jogador.GetComponent<StatusJogador>();
+        statusInimigo = GetComponent<StatusInimigo>();
     }
     void FixedUpdate()
     {
         Vector2 direcao = jogador.transform.position - transform.position;
-        distanciaAteJogador = direcao.x * direcao.x + direcao.y * direcao.y;
-
-        if (distanciaAteJogador <= AtacarQuando)
+        distanciaAteJogador = Mathf.Sqrt(direcao.x * direcao.x + direcao.y * direcao.y);//teorema de pitagoras
+        //anda até o jogador quando ele fica a uma certa distancia. Além de colocar a animação correta.
+        if (distanciaAteJogador <= DistanciaDePercepcao)
         {
             GetComponent<Rigidbody2D>().MovePosition(GetComponent<Rigidbody2D>().position + direcao.normalized * Velocidade * Time.deltaTime);
             animator.SetBool("andando", true);
         }
         else { animator.SetBool("andando", false); }
-
-        cronometroDano += Time.deltaTime;
     }
     void OnCollisionStay2D(Collision2D objetoDeColisao)
     {
-        if (objetoDeColisao.gameObject == jogador && cronometroDano >= CooldownDoDano)
-        {
-
-            vidaJogador.SofrerDano(1);
-            cronometroDano = 0;
-            if (cronometroDano >= CooldownDoDano)
-            {
-                vidaJogador.SofrerDano(1);
-                cronometroDano = 0;
-            }
-            
-        }
+        statusInimigo.darDano(objetoDeColisao, statusJogador);
     }
 }

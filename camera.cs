@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class camera : MonoBehaviour
+public class Camera : MonoBehaviour
 {
     public short limiteEsquerdaX;
     public short limiteCimaY;
@@ -12,18 +12,20 @@ public class camera : MonoBehaviour
     private GameObject jogador;
     private Vector3 posisao;
     private float z;
-    // Start is called before the first frame update
     void Start()
     {
+        jogador = GameObject.FindWithTag("Player");
+        // organiza o vetor z
         z = transform.position.z;
         posisao.z = z;
-        jogador = GameObject.FindWithTag("Player");
     }
 
-    // Update is called once per frame
+    // move a camera apenas quando não se ultrapassou o limite. 
     void Update()
-    { if(jogador.transform.position.y < limiteCimaY && jogador.transform.position.y > limiteBaixoY) { posisao.y = jogador.transform.position.y; }
-      if (jogador.transform.position.x < limiteDireitaX && jogador.transform.position.x > limiteEsquerdaX) { posisao.x = jogador.transform.position.x; }    
-        transform.position = posisao;
+    { if(jogador.transform.position.y < limiteCimaY && jogador.transform.position.y > limiteBaixoY) 
+        { posisao.y = jogador.transform.position.y; }
+      if (jogador.transform.position.x < limiteDireitaX && jogador.transform.position.x > limiteEsquerdaX) 
+        { posisao.x = jogador.transform.position.x; }
+      transform.position = posisao;
     }
 }
