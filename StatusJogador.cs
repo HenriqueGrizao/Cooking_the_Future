@@ -21,21 +21,16 @@ public class StatusJogador : MonoBehaviour
             vida = vidaMaxima;
             GameManager.instance.VidaJogador = vida;
         }
-        else 
-        {
-            IUManeger.instance.AutalizaBarraDeVida();
-        }
         Jogador_Melancia = GameObject.FindWithTag("Player").GetComponent<JogadorMelancia>();
         CorPadrao = spriteRenderer.color;
     }
     public void SofrerDano(int Dano)
     {
         vida -= (Dano - Defesa);
-        IUManeger.instance.AutalizaBarraDeVida();
         GameManager.instance.VidaJogador = vida;
+        IUManeger.instance.AutalizaBarraDeVida();
         if (vida <= 0)
         {
-            Jogador_Melancia.enabled = false;
             Time.timeScale = 0;
             IUManeger.instance.transform.GetChild(0).gameObject.SetActive(true);
         }
