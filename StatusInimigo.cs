@@ -9,6 +9,7 @@ public class StatusInimigo : MonoBehaviour
     public int defesa;
     public int dano;
     public float CooldownDoDano;
+    public int MoedasDerrubadas;
     public GameObject BarraDeVida;
     public Color CorDano;
     public SpriteRenderer spriteRenderer;
@@ -33,6 +34,8 @@ public class StatusInimigo : MonoBehaviour
         PorcentagenVida = vida / VidaMax;
         if (vida <= 0) 
         {
+            GameManager.instance.Coins += MoedasDerrubadas;
+
             Destroy(this.gameObject);
         }
         else { 

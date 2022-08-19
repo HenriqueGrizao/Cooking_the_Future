@@ -6,7 +6,6 @@ public class JogadorMelancia : MonoBehaviour
     public float Velocidade;
     public float DestroiAtaqueApos;
     public float Cooldown;
-    public Canvas Canvas;
     public float DuracaoAtaque;
 
     private float cronometroAposAtaque;
@@ -23,7 +22,6 @@ public class JogadorMelancia : MonoBehaviour
         colliderCapsula = GetComponent<CapsuleCollider2D>();
         colliderQuadrado = GetComponent<PolygonCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        Canvas = GameObject.FindWithTag("Canvas").GetComponent<Canvas>();
     }
     void Update()
     {
@@ -32,7 +30,7 @@ public class JogadorMelancia : MonoBehaviour
     }
     private void movimenta() 
     {
-        //detecta qual tecla foi presionada e muda o x, y, animação e a colisão
+        //Detecta qual tecla foi presionada e muda o x, y, animação e a colisão
         if (Input.GetKey(KeyCode.W)) { 
             eixoY = 1;
             animacao.SetFloat("direcao_y", 1); animacao.SetFloat("direcao_x", 0);

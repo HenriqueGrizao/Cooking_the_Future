@@ -11,11 +11,11 @@ public class DescobriClik : MonoBehaviour
         jogador = GameObject.FindWithTag("Player").GetComponent<JogadorMelancia>();
     }
     private void Update()
-    {// acompanha o movimento do jogador
+    {//Acompanha o movimento do jogador
         transform.position = jogador.transform.position;
     }
     private void OnMouseDown()
-    {//informa a direção
+    {//Informa a direção
         jogador.comesaSocar(direcao);
     }
 }

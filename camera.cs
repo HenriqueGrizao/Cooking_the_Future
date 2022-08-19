@@ -15,12 +15,12 @@ public class Camera : MonoBehaviour
     void Start()
     {
         jogador = GameObject.FindWithTag("Player");
-        // organiza o vetor z
+        //Organiza o vetor z
         z = transform.position.z;
         posisao.z = z;
     }
 
-    // move a camera apenas quando não se ultrapassou o limite. 
+    //Move a câmera apenas quando não se ultrapassou o limite
     void Update()
     { if(jogador.transform.position.y < limiteCimaY && jogador.transform.position.y > limiteBaixoY) 
         { posisao.y = jogador.transform.position.y; }

@@ -12,31 +12,39 @@ public class StatusJogador : MonoBehaviour
     public Color CorDano;
     
     private Color CorPadrao;
-    private Canvas Canvas;
     private JogadorMelancia Jogador_Melancia;
     void Start()
     {
-        vida = vidaMaxima;
-        Canvas = GameObject.FindWithTag("Canvas").GetComponent<Canvas>();
+        vida = GameManager.instance.VidaJogador;
+        if (vida <= 0)//Verifica de já tem a vida salva no GameManager
+        {
+            vida = vidaMaxima;
+            GameManager.instance.VidaJogador = vida;
+        }
+        else 
+        {
+            IUManeger.instance.AutalizaBarraDeVida();
+        }
         Jogador_Melancia = GameObject.FindWithTag("Player").GetComponent<JogadorMelancia>();
         CorPadrao = spriteRenderer.color;
     }
     public void SofrerDano(int Dano)
     {
         vida -= (Dano - Defesa);
-        Canvas.AutalizaBarraDeVida();
+        IUManeger.instance.AutalizaBarraDeVida();
+        GameManager.instance.VidaJogador = vida;
         if (vida <= 0)
         {
             Jogador_Melancia.enabled = false;
             Time.timeScale = 0;
-            Canvas.transform.GetChild(0).gameObject.SetActive(true);
+            IUManeger.instance.transform.GetChild(0).gameObject.SetActive(true);
         }
         TrocaCor();
     }
-    //Volta para a coloração normal
+    //Volta para a coloração normal, chamado pelo Invoke
     private void voltaCor() 
     { spriteRenderer.color = CorPadrao; }
-    //troca a cor e chama o voltarCor apos um tempo
+    //Troca a cor e chama o voltarCor apos um tempo
     private void TrocaCor()
     {
         spriteRenderer.color = CorDano;
@@ -49,5 +57,6 @@ public class StatusJogador : MonoBehaviour
         {
             vida = vidaMaxima;
         }
+        GameManager.instance.VidaJogador = vida;
     }
 }

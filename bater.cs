@@ -7,7 +7,7 @@ public class Bater : MonoBehaviour
     public int dano;
 
     private void Start()
-    {//o valor do dano esta sendo pego da variavel do jogador
+    {//O valor do dano está sendo pego da variável do jogador
         dano = GameObject.FindWithTag("Player").GetComponent<StatusJogador>().Dano;
     }
     void OnTriggerEnter2D(Collider2D objetoDeColisao)
